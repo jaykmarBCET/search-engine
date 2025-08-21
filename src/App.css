@@ -1,0 +1,57 @@
+/* NProgress bar customization */
+#nprogress .bar {
+  background: #3b82f6; /* Tailwind blue-500 */
+  height: 3px;
+}
+#nprogress .peg {
+  box-shadow: 0 0 10px #3b82f6, 0 0 5px #3b82f6;
+}
+
+/* Gradient animation for the title */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 5s ease infinite;
+}
+
+/* Fade-in animation for results */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Customize NProgress bar */
+#nprogress .bar {
+  background: linear-gradient(to right, #3b82f6, #8b5cf6);
+  height: 3px;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #3b82f6, 0 0 5px #8b5cf6;
+}
+
+/* Ensure smooth transitions */
+.transition-all {
+  transition: all 0.3s ease;
+}
