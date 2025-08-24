@@ -4,6 +4,7 @@ import axios from 'axios';
 interface SearchEngineInfo{
     answer:string|null;
     movieResult:MovieResult[] | [];
+    image:string | null;
     webSearchResponse:AIAnswerResponse| null;
     isLoading:boolean;
     searchQuery:(query:string)=>Promise<void>;
@@ -14,12 +15,14 @@ type SearchEngineResponse =
   | {
       movieSearchData?: MovieResult[];
       webSearchData?: AIAnswerResponse;
+      image?:string;
     };
 
 export const useSearchEngine = create<SearchEngineInfo>((set)=>({
     answer:null,
     movieResult:[],
     webSearchResponse:null,
+    image:null,
     isLoading:false,
     searchQuery:async(query)=>{
         set({isLoading:true})
@@ -29,7 +32,7 @@ export const useSearchEngine = create<SearchEngineInfo>((set)=>({
             if(response.status>=400){
                 throw Error("Search Time Error")
             }
-            set({answer:"",webSearchResponse:null,movieResult:[]})
+            set({answer:"",webSearchResponse:null,movieResult:[],image:null})
             if(typeof response.data === 'string'){
                 set({answer:response.data})
                 return
@@ -40,6 +43,9 @@ export const useSearchEngine = create<SearchEngineInfo>((set)=>({
             }
             if(response.data.webSearchData){
                 set({webSearchResponse:response.data.webSearchData})
+            }
+            if(response.data.image){
+                set({image:response.data.image})
             }
 
             

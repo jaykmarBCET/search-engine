@@ -8,12 +8,13 @@ import remarkGfm from "remark-gfm";
 import MovieCard from "./components/MovieCard";
 import SearchResultCard from "./components/SearchResultCard";
 import NProgress from "nprogress";
+import { FaSearch } from "react-icons/fa";
 import "nprogress/nprogress.css";
 import "./App.css";
 
 function App() {
   const [query, setQuery] = useState("");
-  const { answer, movieResult, webSearchResponse, searchQuery, isLoading } =
+  const { answer, movieResult, webSearchResponse, searchQuery, isLoading, image } =
     useSearchEngine();
 
   const handleSearch = () => {
@@ -22,6 +23,21 @@ function App() {
     }
   };
 
+
+  async function copyBase64AsFile(base64: string, fileType = "image/png", fileName = "image.png") {
+    const res = await fetch(base64);
+    const blob = await res.blob();
+    const file = new File([blob], fileName, { type: fileType });
+
+    const clipboardItem = new ClipboardItem({ [file.type]: file });
+
+    try {
+      await navigator.clipboard.write([clipboardItem]);
+      alert("File copied");
+    } catch (err) {
+      console.error("Copy failed:", err);
+    }
+  }
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !isLoading) {
       handleSearch();
@@ -75,9 +91,8 @@ function App() {
           Anything Search
         </h1>
         <div
-          className={`flex w-full gap-3 bg-gray-800/80 backdrop-blur-sm rounded-full p-3 shadow-2xl transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-500/50 ${
-            isLoading ? "opacity-60 pointer-events-none" : ""
-          }`}
+          className={`flex w-full gap-3 bg-gray-800/80 backdrop-blur-sm rounded-full p-3 shadow-2xl transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-500/50 ${isLoading ? "opacity-60 pointer-events-none" : ""
+            }`}
         >
           <input
             value={query}
@@ -116,7 +131,7 @@ function App() {
                 />
               </svg>
             ) : (
-              "Search"
+              <FaSearch size={30} />
             )}
           </button>
         </div>
@@ -159,6 +174,28 @@ function App() {
             <div className="prose prose-invert prose-p:text-gray-300 prose-a:text-blue-400">
               <Markdown remarkPlugins={[remarkGfm]}>{answer}</Markdown>
             </div>
+          </div>
+        )}
+        {/*  */}
+        {!isLoading && image && (
+          <div className="border relative max-w-96 max-h-96 flex justify-center items-center border-gray-600 rounded-2xl shadow-2xl overflow-hidden">
+            {image ? (
+              <div>
+                <img
+                  className="scale-115 z-10 duration-300 transition-all hover:scale-110 object-cover"
+                  src={image}
+                  alt="Generated Image"
+                />
+                <button
+                  className="z-20 absolute bottom-2 right-2 shadow text-sm py-1 px-4 bg-black rounded-2xl border-gray-900 text-white"
+                  onClick={() => copyBase64AsFile(image)}
+                >
+                  Copy
+                </button>
+              </div>
+            ) : (
+              <p className="text-center p-4 text-gray-500">No image generated</p>
+            )}
           </div>
         )}
 
