@@ -2,6 +2,7 @@ import { Card, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import type { SearchResult } from "@/types/types"
 import { useState } from "react"
+import ReadMe from 'react-markdown'
 
 type Props = {
   result: SearchResult
@@ -28,6 +29,7 @@ function SearchResultCard({ result }: Props) {
           )}
           <div className="flex flex-col overflow-hidden">
             <p className="text-sm text-gray-400 font-medium truncate">
+              
               {result.url.replace(/^(https?:\/\/)?(www\.)?/i, "").split('/')[0]}
             </p>
           </div>
@@ -41,7 +43,10 @@ function SearchResultCard({ result }: Props) {
             </CardTitle>
           </a>
           <p className="text-base text-gray-300 leading-relaxed line-clamp-3">
+            <ReadMe>
             {result.content}
+
+            </ReadMe>
           </p>
         </div>
 

@@ -27,7 +27,7 @@ export const useSearchEngine = create<SearchEngineInfo>((set)=>({
     searchQuery:async(query)=>{
         set({isLoading:true})
         try {
-            const response = await axios.get<SearchEngineResponse>(`https://x2l757-3000.csb.app/search-engine?query=${encodeURI(query)}`)
+            const response = await axios.get<SearchEngineResponse>(`https://ddkz68-3000.csb.app/search-engine?query=${encodeURI(query)}`)
 
             if(response.status>=400){
                 throw Error("Search Time Error")

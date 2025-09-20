@@ -88,7 +88,7 @@ function App() {
       {/* Search Section */}
       <div className="flex flex-col items-center justify-center max-w-4xl mx-auto mb-12">
         <h1 className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 mb-6 animate-gradient">
-          Anything Search
+          Search Anything
         </h1>
         <div
           className={`flex w-full gap-3 bg-gray-800/80 backdrop-blur-sm rounded-full p-3 shadow-2xl transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-500/50 ${isLoading ? "opacity-60 pointer-events-none" : ""
@@ -217,7 +217,7 @@ function App() {
             <h2 className="text-2xl font-bold mb-6 text-blue-400">
               Web Results
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex flex-row flex-wrap gap-4">
               {webSearchResponse.results.map((res: SearchResult) => (
                 <SearchResultCard key={res.url} result={res} />
               ))}
